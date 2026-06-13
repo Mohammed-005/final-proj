@@ -1,0 +1,41 @@
+services:
+  app-v1:
+    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:v2
+    container_name: app-version1.0
+    ports:
+      - "7001:7000"
+    environment:
+      - APP_VERSION=v1
+      - FALSE_TRIGGER=false
+    restart: always
+    networks:
+      - gateway-network
+
+  app-v2:
+    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:v2
+    container_name: app-version2.0
+    environment:
+      - APP_VERSION=v2
+      - FALSE_TRIGGER=false
+    ports:
+      - "7002:7000"
+    restart: always
+    networks:
+      - gateway-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy-gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/etc/nginx/conf.d/
+    depends_on:
+      - app-v1
+    restart: always
+    networks:
+      - gateway-network
+
+networks:
+  gateway-network:
+    driver: bridge
