@@ -2,6 +2,8 @@ import os
 import sys
 from flask import Flask, jsonify
 
+PORT = 7000
+
 app = Flask(__name__)
 
 APP_VERSION = os.environ.get("APP_VERSION", "v1")
