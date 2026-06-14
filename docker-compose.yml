@@ -1,24 +1,28 @@
+
+
 services:
   app-v1:
-    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:v2
+    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:latest
     container_name: app-version1.0
     ports:
       - "7001:7000"
     environment:
       - APP_VERSION=v1
       - FALSE_TRIGGER=false
+      - PORT=7000
     restart: always
     networks:
       - gateway-network
 
   app-v2:
-    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:v2
+    image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/secure-app:latest
     container_name: app-version2.0
+    ports:
+      - "7002:7000"
     environment:
       - APP_VERSION=v2
       - FALSE_TRIGGER=false
-    ports:
-      - "7002:7000"
+      - PORT=7000
     restart: always
     networks:
       - gateway-network
